@@ -1,0 +1,3 @@
+<div class="xp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress.percent }}" aria-label="XP progress to next level"><div class="xp-fill" style="width:{{ progress.percent }}%"></div></div>
+{% if progress.next %}<p class="muted">{{ progress.xp_into }} / {{ progress.xp_span }} XP · {{ progress.xp_remaining }} XP to level {{ progress.next.level_number }} ({{ progress.next.title }})</p>
+{% else %}<p class="muted">Top level reached.</p>{% endif %}

@@ -1,0 +1,43 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}LevelUp Life{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{% url 'home' %}"><span class="brand-mark">LV</span> LevelUp Life</a>
+    <nav class="topnav" aria-label="Main">
+      {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}" {% if request.resolver_match.url_name == 'user_dashboard' or request.resolver_match.url_name == 'admin_dashboard' %}aria-current="page"{% endif %}>
+          {% if user.is_admin_role %}Admin dashboard{% else %}My dashboard{% endif %}
+        </a>
+        <a href="{% url 'profile' %}" {% if request.resolver_match.url_name == 'profile' or request.resolver_match.url_name == 'profile_edit' %}aria-current="page"{% endif %}>Profile</a>
+        {% if user.is_staff %}<a href="{% url 'admin:index' %}">Django admin</a>{% endif %}
+      {% endif %}
+    </nav>
+    <div class="topactions">
+      {% if user.is_authenticated %}
+        <span class="who">{{ user.display_name }} <span class="chip">{% if user.is_staff %}Admin{% else %}Player{% endif %}</span></span>
+        <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="btn btn-ghost" type="submit">Log out</button></form>
+      {% else %}
+        <a class="btn btn-ghost" href="{% url 'login' %}">Log in</a>
+        <a class="btn" href="{% url 'register' %}">Sign up</a>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if messages %}
+  <div class="messages" role="status">
+    {% for message in messages %}<p class="msg {{ message.tags }}">{{ message }}</p>{% endfor %}
+  </div>
+  {% endif %}
+
+  <main class="page">{% block content %}{% endblock %}</main>
+</body>
+</html>

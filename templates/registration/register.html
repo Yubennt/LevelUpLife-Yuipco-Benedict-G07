@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Sign up · LevelUp Life{% endblock %}
+{% block content %}
+<section class="card auth">
+  <h1>Create your character</h1>
+  <p class="muted">Already registered? <a href="{% url 'login' %}">Log in</a></p>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% for error in form.non_field_errors %}<p class="msg error">{{ error }}</p>{% endfor %}
+    {% for field in form %}{% include "partials/_field.html" %}{% endfor %}
+    <button class="btn btn-block" type="submit">Sign up</button>
+  </form>
+</section>
+{% endblock %}
