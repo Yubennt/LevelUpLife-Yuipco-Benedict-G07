@@ -1,0 +1,21 @@
+# Secrets
+.env
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Local databases (the project uses PostgreSQL/Supabase, never SQLite)
+*.sqlite3
+
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
