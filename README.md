@@ -68,4 +68,5 @@ gamification/   Level model + seed migration, level/XP progress service (badges 
 dashboard/      landing page, role router, user and admin dashboards
 templates/      Django templates      static/css/   stylesheet
 ```
+# Habit Gamification Engine 
 # Habit Management Feature 
