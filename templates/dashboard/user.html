@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}My dashboard · LevelUp Life{% endblock %}
+{% block content %}
+<section class="card character">
+  {% include "partials/_avatar.html" with person=user size="lg" %}
+  <div class="char-main">
+    <h1>{{ user.display_name }}</h1>
+    <p class="muted">{% if user.personal_goal %}Levelling up for: {{ user.personal_goal }}{% else %}No personal goal yet. <a href="{% url 'profile_edit' %}">Set one</a>.{% endif %}</p>
+    {% include "partials/_level_bar.html" %}
+  </div>
+  <div class="lvl-badge" aria-label="Level {{ progress.level.level_number }}">{{ progress.level.level_number }}</div>
+</section>
+
+<section class="grid3">
+  <div class="card stat"><span class="stat-n">{{ progress.level.title }}</span><span class="muted">Level {{ progress.level.level_number }} title</span></div>
+  <div class="card stat"><span class="stat-n">{{ user.total_xp }}</span><span class="muted">Total XP</span></div>
+  <div class="card stat"><span class="stat-n">{{ progress.xp_remaining }}</span><span class="muted">XP to next level</span></div>
+</section>
+
+<section class="card">
+  <h2>Today's habits</h2>
+  <p class="muted">You haven't added any habits yet. Habit management, streaks and badges arrive in the next sprints.</p>
+</section>
+{% endblock %}

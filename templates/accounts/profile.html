@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Profile · LevelUp Life{% endblock %}
+{% block content %}
+<section class="card profile">
+  <div class="profile-head">
+    {% include "partials/_avatar.html" with person=profile_user size="lg" %}
+    <div>
+      <h1>{{ profile_user.display_name }}</h1>
+      <p class="muted">{{ profile_user.email }} <span class="chip">{% if profile_user.is_staff %}Admin{% else %}Player{% endif %}</span></p>
+    </div>
+    <a class="btn" href="{% url 'profile_edit' %}">Edit profile</a>
+  </div>
+  <dl class="details">
+    <div><dt>Display name</dt><dd>{{ profile_user.display_name }}</dd></div>
+    <div><dt>Email</dt><dd>{{ profile_user.email }}</dd></div>
+    <div><dt>Time zone</dt><dd>{{ profile_user.time_zone }}</dd></div>
+    <div><dt>Habit reminders</dt><dd>{% if profile_user.reminders_enabled %}On{% else %}Off{% endif %}</dd></div>
+    <div><dt>Level</dt><dd>{{ progress.level.level_number }} · {{ progress.level.title }} ({{ profile_user.total_xp }} XP)</dd></div>
+    <div><dt>Member since</dt><dd>{{ profile_user.date_joined|date:"F j, Y" }}</dd></div>
+    <div class="span2"><dt>Personal goal</dt><dd>{{ profile_user.personal_goal|default:"Not set" }}</dd></div>
+  </dl>
+  <p><a href="{% url 'password_change' %}">Change password</a></p>
+</section>
+{% endblock %}

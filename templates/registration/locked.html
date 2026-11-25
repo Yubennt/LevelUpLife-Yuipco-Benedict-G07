@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Account locked · LevelUp Life{% endblock %}
+{% block content %}
+<section class="card auth">
+  <h1>Account temporarily locked</h1>
+  <p class="msg error">Too many failed login attempts. This account is locked for 15 minutes.</p>
+  <p class="muted">Try again later. If you forgot your password, wait for the lock to end and use the correct one, or ask an administrator for help.</p>
+  <p><a href="{% url 'login' %}">Back to login</a></p>
+</section>
+{% endblock %}

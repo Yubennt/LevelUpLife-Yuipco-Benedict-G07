@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Admin dashboard · LevelUp Life{% endblock %}
+{% block content %}
+<h1>Admin dashboard</h1>
+<section class="grid4">
+  <div class="card stat"><span class="stat-n">{{ total_users }}</span><span class="muted">Total accounts</span></div>
+  <div class="card stat"><span class="stat-n">{{ active_users }}</span><span class="muted">Active</span></div>
+  <div class="card stat"><span class="stat-n">{{ inactive_users }}</span><span class="muted">Deactivated</span></div>
+  <div class="card stat"><span class="stat-n">{{ new_this_week }}</span><span class="muted">Joined in the last 7 days</span></div>
+</section>
+
+<section class="card">
+  <h2>Data integrity</h2>
+  <ul class="checks">
+    <li class="{% if level_mismatches == 0 %}ok{% else %}bad{% endif %}">
+      {% if level_mismatches == 0 %}Every user's level matches their total XP.{% else %}{{ level_mismatches }} user(s) have a level that does not match their total XP.{% endif %}
+    </li>
+    <li class="{% if level_count > 0 %}ok{% else %}bad{% endif %}">{{ level_count }} level definition(s) loaded.</li>
+    <li class="pending">Total XP versus the sum of completions will be checked once habit completions exist (F-04).</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>Recent registrations</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Email</th><th>Name</th><th>Level</th><th>Joined</th><th>Status</th></tr></thead>
+      <tbody>
+      {% for u in recent_users %}
+        <tr>
+          <td>{{ u.email }}</td><td>{{ u.display_name }}{% if u.is_staff %} <span class="chip">Admin</span>{% endif %}</td>
+          <td>{{ u.current_level.level_number }}</td><td>{{ u.date_joined|date:"M j, Y" }}</td>
+          <td>{% if u.is_active %}Active{% else %}Deactivated{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">Deactivate or reactivate accounts, and review the action history, in the <a href="{% url 'admin:accounts_user_changelist' %}">Django admin</a>.</p>
+</section>
+{% endblock %}

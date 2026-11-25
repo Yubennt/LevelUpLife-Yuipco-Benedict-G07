@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Your habits finally have a level bar.</h1>
+    <p class="lead">Check off a habit, earn XP, keep your streak alive, and unlock badges as you go. LevelUp Life turns the boring parts of self-improvement into progress you can see.</p>
+    <p class="actions"><a class="btn btn-lg" href="{% url 'register' %}">Create your character</a> <a class="btn btn-ghost btn-lg" href="{% url 'login' %}">I already have one</a></p>
+  </div>
+  <div class="card preview" aria-hidden="true">
+    <div class="lvl-badge">7</div>
+    <p class="preview-name">Sample player</p>
+    <div class="xp-bar"><div class="xp-fill" style="width:64%"></div></div>
+    <p class="muted">64 / 100 XP to level 8</p>
+  </div>
+</section>
+{% endblock %}
