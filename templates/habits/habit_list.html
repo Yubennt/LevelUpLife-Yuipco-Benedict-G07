@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}My Habits - LevelUp Life{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+  <h2>My Habits</h2>
+  <a href="{% url 'habits:habit_create' %}" class="btn">+ Create New Habit</a>
+</div>
+
+<div class="card">
+  {% if habits %}
+    <div class="habit-list">
+      {% for habit in habits %}
+        <div class="habit-item">
+          <div class="habit-info">
+            <h3>{{ habit.title }}</h3>
+            <p class="muted">{{ habit.description|default:"No description set" }}</p>
+            <div class="habit-tags">
+              <span class="chip">{{ habit.get_frequency_display }}</span>
+              <span class="chip" style="background: #fef3c7; color: #92400e;">{{ habit.get_difficulty_display }} (+{{ habit.xp_reward }} XP)</span>
+              {% for tag in habit.tags.all %}
+                <span class="chip">#{{ tag.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="topactions">
+            <form method="post" action="{% url 'habits:habit_toggle' habit.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn">Complete</button>
+            </form>
+            <a href="{% url 'habits:habit_update' habit.pk %}" class="btn btn-ghost">Edit</a>
+            <a href="{% url 'habits:habit_delete' habit.pk %}" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="muted">You haven't created any habits yet.</p>
+    <a href="{% url 'habits:habit_create' %}" class="btn">+ Create Your First Habit</a>
+  {% endif %}
+</div>
+{% endblock %}

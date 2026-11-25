@@ -18,7 +18,22 @@
 </section>
 
 <section class="card">
-  <h2>Today's habits</h2>
-  <p class="muted">You haven't added any habits yet. Habit management, streaks and badges arrive in the next sprints.</p>
+  <<h3>Today's habits</h3>
+    {% if habits %}
+        <ul>
+          {% for habit in habits %}
+            <li>
+              <strong>{{ habit.title }}</strong> - {{ habit.frequency }}
+              <form method="post" action="{% url 'habits:habit_log' habit.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn">Complete</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>You haven't added any habits yet.</p>
+    {% endif %}
+    <a href="{% url 'habits:habit_create' %}" class="btn">Add Habit</a>
 </section>
 {% endblock %}
